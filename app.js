@@ -1,8 +1,10 @@
+const defaultTrailColor = '#333333';
+
 function makeSquare() {
   const square = document.createElement('div');
   square.classList.add('square');
   square.addEventListener('mouseover', () => {
-    square.classList.add('trail');
+    square.style.backgroundColor = defaultTrailColor;
   });
   return square;
 }
@@ -26,14 +28,39 @@ function makeGrid(side) {
   }
 }
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 const gridSizeInput = document.getElementById('gridSize');
 const resetBtn = document.getElementById('reset');
+const rainbowToggle = document.getElementById('rainbowToggle')
 
 gridSizeInput.addEventListener('change', () => {
   makeGrid(gridSizeInput.value);
 });
+
 resetBtn.addEventListener('click', () => {
   makeGrid(gridSizeInput.value);
+  rainbowToggle.checked = false;
+});
+
+rainbowToggle.addEventListener('change', () => {
+  const squares = document.querySelectorAll('.square');
+  squares.forEach((square) => {
+    square.addEventListener('mouseover', () => {
+      if (rainbowToggle.checked) {
+        square.style.backgroundColor = getRandomColor(); 
+      } else {
+        square.style.backgroundColor = defaultTrailColor; 
+      }
+    });
+  });
 });
 
 makeGrid(16);
