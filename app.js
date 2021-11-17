@@ -37,9 +37,24 @@ function getRandomColor() {
   return color;
 }
 
+function setRainbowMode() {
+  // Checks the state of the toggle and sets rainbow mode accordingly
+
+  const squares = document.querySelectorAll('.square');
+  squares.forEach((square) => {
+    square.addEventListener('mouseover', () => {
+      if (rainbowToggle.checked) {
+        square.style.backgroundColor = getRandomColor(); 
+      } else {
+        square.style.backgroundColor = defaultTrailColor; 
+      }
+    });
+  }); 
+}
+
 function reset() {
   makeGrid(gridSizeInput.value);
-  rainbowToggle.checked = false;
+  setRainbowMode();
 }
 
 const gridSizeInput = document.getElementById('gridSize');
@@ -55,16 +70,7 @@ resetBtn.addEventListener('click', () => {
 });
 
 rainbowToggle.addEventListener('change', () => {
-  const squares = document.querySelectorAll('.square');
-  squares.forEach((square) => {
-    square.addEventListener('mouseover', () => {
-      if (rainbowToggle.checked) {
-        square.style.backgroundColor = getRandomColor(); 
-      } else {
-        square.style.backgroundColor = defaultTrailColor; 
-      }
-    });
-  });
+  setRainbowMode();
 });
 
 makeGrid(16);
