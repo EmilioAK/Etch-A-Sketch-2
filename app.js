@@ -1,11 +1,10 @@
-const defaultTrailColor = '#333333';
+const gridSizeInput = document.getElementById('gridSize');
+const resetBtn = document.getElementById('reset');
+const rainbowToggle = document.getElementById('rainbowToggle');
 
 function makeSquare() {
   const square = document.createElement('div');
   square.classList.add('square');
-  square.addEventListener('mouseover', () => {
-    square.style.backgroundColor = defaultTrailColor;
-  });
   return square;
 }
 
@@ -15,9 +14,10 @@ function makeRow() {
   return row;
 }
 
-function makeGrid(side) {
+function makeGrid() {
   const container = document.querySelector('.container');
   container.innerHTML = ''; // Clears the previous value if its run again
+  side = gridSizeInput.value;
   for (let index = 0; index < side; index++) {
     const row = makeRow();
     for (let index = 0; index < side; index++) {
@@ -26,6 +26,7 @@ function makeGrid(side) {
     }
     container.appendChild(row);
   }
+  createMouseoverTrail();
 }
 
 function getRandomColor() {
@@ -37,8 +38,9 @@ function getRandomColor() {
   return color;
 }
 
-function setRainbowMode() {
+function createMouseoverTrail() {
   // Checks the state of the toggle and sets rainbow mode accordingly
+  // Adds an event listner to every square
 
   const squares = document.querySelectorAll('.square');
   squares.forEach((square) => {
@@ -46,31 +48,22 @@ function setRainbowMode() {
       if (rainbowToggle.checked) {
         square.style.backgroundColor = getRandomColor(); 
       } else {
-        square.style.backgroundColor = defaultTrailColor; 
+        square.style.backgroundColor = '#333333'; 
       }
     });
   }); 
 }
 
-function reset() {
-  makeGrid(gridSizeInput.value);
-  setRainbowMode();
-}
-
-const gridSizeInput = document.getElementById('gridSize');
-const resetBtn = document.getElementById('reset');
-const rainbowToggle = document.getElementById('rainbowToggle');
-
 gridSizeInput.addEventListener('change', () => {
-  reset();
+  makeGrid();
 });
 
 resetBtn.addEventListener('click', () => {
-  reset();
+  makeGrid();
 });
 
 rainbowToggle.addEventListener('change', () => {
-  setRainbowMode();
+  createMouseoverTrail();
 });
 
 makeGrid(16);
