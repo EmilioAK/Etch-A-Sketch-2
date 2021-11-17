@@ -37,17 +37,21 @@ function getRandomColor() {
   return color;
 }
 
+function reset() {
+  makeGrid(gridSizeInput.value);
+  rainbowToggle.checked = false;
+}
+
 const gridSizeInput = document.getElementById('gridSize');
 const resetBtn = document.getElementById('reset');
 const rainbowToggle = document.getElementById('rainbowToggle');
 
 gridSizeInput.addEventListener('change', () => {
-  makeGrid(gridSizeInput.value);
+  reset();
 });
 
 resetBtn.addEventListener('click', () => {
-  makeGrid(gridSizeInput.value);
-  rainbowToggle.checked = false;
+  reset();
 });
 
 rainbowToggle.addEventListener('change', () => {
