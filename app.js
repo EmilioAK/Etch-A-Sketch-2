@@ -39,7 +39,7 @@ function getRandomColor() {
 
 const gridSizeInput = document.getElementById('gridSize');
 const resetBtn = document.getElementById('reset');
-const rainbowToggle = document.getElementById('rainbowToggle')
+const rainbowToggle = document.getElementById('rainbowToggle');
 
 gridSizeInput.addEventListener('change', () => {
   makeGrid(gridSizeInput.value);
