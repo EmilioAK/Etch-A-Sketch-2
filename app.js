@@ -1,4 +1,5 @@
 const gridSizeInput = document.getElementById('gridSize');
+const container = document.querySelector('.container');
 
 function getRandomColor() {
   // Math.random() produces a fraction in range `[0, 1)`, then we multiply
@@ -13,14 +14,6 @@ function getRandomColor() {
 function makeSquare() {
   const square = document.createElement('div');
   square.classList.add('square');
-
-  square.addEventListener('mouseover', () => {
-    if (document.getElementById('rainbowToggle').checked) {
-      square.style.backgroundColor = getRandomColor(); 
-    } else {
-      square.style.backgroundColor = '#333333'; 
-    }
-  });
   return square;
 }
 
@@ -31,7 +24,6 @@ function makeRow() {
 }
 
 function makeGrid() {
-  const container = document.querySelector('.container');
   container.innerHTML = ''; // Clears the previous value if its run again
   side = gridSizeInput.value;
   for (let index = 0; index < side; index++) {
@@ -43,6 +35,24 @@ function makeGrid() {
     container.appendChild(row);
   }
 }
+
+// Handle `mouseover` events on the container with capture=true, which allows
+// us to process `mouseover` events on all squares without attaching an event
+// handler to each square individually.
+container.addEventListener('mouseover', (event) => {
+  const element = event.target;
+  // Only process squares in this event listener.
+  if (!element || !element.matches('div.square')) {
+    return;
+  }
+  event.stopPropagation();
+
+  if (document.getElementById('rainbowToggle').checked) {
+    element.style.backgroundColor = getRandomColor();
+  } else {
+    element.style.backgroundColor = '#333333';
+  }
+}, true);
 
 gridSizeInput.addEventListener('change', () => {
   makeGrid();
