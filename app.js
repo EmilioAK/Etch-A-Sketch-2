@@ -11,25 +11,20 @@ function getRandomColor() {
   return '#' + padded;
 }
 
-function makeSquare() {
-  const square = document.createElement('div');
-  square.classList.add('square');
-  return square;
-}
-
-function makeRow() {
-  const row = document.createElement('div');
-  row.classList.add('row');
-  return row;
+function makeDiv(divClass) {
+  const div = document.createElement('div');
+  div.classList.add(divClass);
+  return div;
 }
 
 function makeGrid() {
+  const container = document.querySelector('.container');
   container.innerHTML = ''; // Clears the previous value if its run again
   side = gridSizeInput.value;
-  for (let index = 0; index < side; index++) {
-    const row = makeRow();
-    for (let index = 0; index < side; index++) {
-      const square = makeSquare();
+  for (let i = 0; i < side; i++) {
+    const row = makeDiv('row');
+    for (let i = 0; i < side; i++) {
+      const square = makeDiv('square');
       row.appendChild(square);
     }
     container.appendChild(row);
